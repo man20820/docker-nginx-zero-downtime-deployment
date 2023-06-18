@@ -32,6 +32,7 @@ function run1() {
   bash "$SCRIPT_PATH"run1.sh
   sleep $COOLDOWN
   response=$(curl --write-out '%{http_code}' --silent --output /dev/null $PRIMARY_CONTAINER_URL)
+  echo $response
   if [ "$response" == "200" ]; then
     activate1
     service nginx reload
@@ -43,6 +44,7 @@ function run2() {
   bash "$SCRIPT_PATH"run2.sh
   sleep $COOLDOWN
   response=$(curl --write-out '%{http_code}' --silent --output /dev/null $SECONDARY_CONTAINER_URL)
+  echo $response
   if [ "$response" == "200" ]; then
     activate2
     service nginx reload
@@ -56,11 +58,11 @@ main() {
   SECONDARY_CONTAINER="#server $SECONDARY_CONTAINER_URL;"
   if [ "$IS_COMMENTED" == "$PRIMARY_CONTAINER" ]; then
     run1
-    echo "change to secondary container"
+    echo "change to primary container"
   fi
   if [ "$IS_COMMENTED" == "$SECONDARY_CONTAINER" ]; then
     run2
-    echo "change to primary container"
+    echo "change to secondary container"
   fi
 }
 
