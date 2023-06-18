@@ -1,0 +1,1 @@
+docker rm -f container-name-1
